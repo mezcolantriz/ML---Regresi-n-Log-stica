@@ -1,89 +1,47 @@
-# Data Science Project Boilerplate
+Comprensión empresarial
 
-This boilerplate is designed to kickstart data science projects by providing a basic setup for database connections, data processing, and machine learning model development. It includes a structured folder organization for your datasets and a set of pre-defined Python packages necessary for most data science tasks.
+Los depósitos a largo plazo permiten a los bancos retener dinero durante un período de tiempo específico, lo que permite al banco utilizar ese dinero para mejorar sus inversiones. Las campañas de marketing de este producto se basan en llamadas telefónicas. Si un usuario no se encuentra disponible en un momento dado, entonces se le volverá a llamar de nuevo en otro momento.
 
-## Structure
+Descripción del problema
 
-The project is organized as follows:
+El banco portugués está teniendo una disminución en sus ingresos, por lo que quieren poder identificar a los clientes existentes que tienen una mayor probabilidad de contratar un depósito a largo plazo. Esto permitirá que el banco centre sus esfuerzos de marketing en esos clientes y evitará perder dinero y tiempo en clientes que probablemente no se suscribirán.
 
-- `app.py` - The main Python script that you run for your project.
-- `explore.py` - A notebook to explore data, play around, visualize, clean, etc. Ideally the notebook code should be migrated to the app.py when moving to production.
-- `utils.py` - This file contains utility code for operations like database connections.
-- `requirements.txt` - This file contains the list of necessary python packages.
-- `models/` - This directory should contain your SQLAlchemy model classes.
-- `data/` - This directory contains the following subdirectories:
-  - `interin/` - For intermediate data that has been transformed.
-  - `processed/` - For the final data to be used for modeling.
-  - `raw/` - For raw data without any processing.
- 
-    
-## Setup
+Para abordar este problema crearemos un algoritmo de clasificación que ayude a predecir si un cliente contratará o no un depósito a largo plazo.
 
-**Prerequisites**
+Paso 1: Carga del conjunto de datos
+El conjunto de datos se puede encontrar en esta carpeta de proyecto bajo el nombre bank-marketing-campaign-data.csv, y puedes cargarlo en el código directamente desde el siguiente enlace:
 
-Make sure you have Python 3.11+ installed on your. You will also need pip for installing the Python packages.
+https://raw.githubusercontent.com/4GeeksAcademy/logistic-regression-project-tutorial/main/bank-marketing-campaign-data.csv
+O descargarlo y añadirlo a mano en tu repositorio. En este conjunto de datos encontrarás las siguientes variables:
 
-**Installation**
+age. Edad del cliente (numérico)
+job. Tipo de trabajo (categórico)
+marital. Estado civil (categórico)
+education. Nivel de educación (categórico)
+default. ¿Tiene crédito actualmente? (categórico)
+housing. ¿Tiene un préstamo de vivienda? (categórico)
+loan. ¿Tiene un préstamo personal? (categórico)
+contact. Tipo de comunicación de contacto (categórico)
+month. Último mes en el que se le ha contactado (categórico)
+day_of_week. Último día en el que se le ha contactado (categórico)
+duration. Duración del contacto previo en segundos (numérico)
+campaign. Número de contactos realizados durante esta campaña al cliente (numérico)
+pdays. Número de días que transcurrieron desde la última campaña hasta que fue contactado (numérico)
+previous. Número de contactos realizados durante la campaña anterior al cliente (numérico)
+poutcome. Resultado de la campaña de marketing anterior (categórico)
+emp.var.rate. Tasa de variación del empleo. Indicador trimestral (numérico)
+cons.price.idx. Índice de precios al consumidor. Indicador mensual (numérico)
+cons.conf.idx. Índice de confianza del consumidor. Indicador mensual (numérico)
+euribor3m. Tasa EURIBOR 3 meses. Indicador diario (numérico)
+nr.employed. Número de empleados. Indicador trimestral (numérico)
+y. TARGET. El cliente contrata un depósito a largo plazo o no (categórico)
+Paso 2: Realiza un EDA completo
+Este segundo paso es vital para asegurar que nos quedamos con las variables estrictamente necesarias y eliminamos las que no son relevantes o no aportan información. Utiliza el Notebook de ejemplo que trabajamos y adáptalo a este caso de uso.
 
-Clone the project repository to your local machine.
+Asegúrate de dividir convenientemente el conjunto de datos en train y test como hemos visto en lecciones anteriores.
 
-Navigate to the project directory and install the required Python packages:
+Paso 3: Construye un modelo de regresión logística
+No es necesario que optimices los hiperparámetros. Comienza utilizando una definición por defecto y mejórala en el paso siguiente.
 
-```bash
-pip install -r requirements.txt
-```
-
-**Create a database (if needed)**
-
-Create a new database within the Postgres engine by customizing and executing the following command: `$ createdb -h localhost -U <username> <db_name>`
-Connect to the Postgres engine to use your database, manipulate tables and data: `$ psql -h localhost -U <username> <db_name>`
-NOTE: Remember to check the ./.env file information to get the username and db_name.
-
-Once you are inside PSQL you will be able to create tables, make queries, insert, update or delete data and much more!
-
-**Environment Variables**
-
-Create a .env file in the project root directory to store your environment variables, such as your database connection string:
-
-```makefile
-DATABASE_URL="your_database_connection_url_here"
-```
-
-## Running the Application
-
-To run the application, execute the app.py script from the root of the project directory:
-
-```bash
-python app.py
-```
-
-## Adding Models
-
-To add SQLAlchemy model classes, create new Python script files inside the models/ directory. These classes should be defined according to your database schema.
-
-Example model definition (`models/example_model.py`):
-
-```py
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String
-
-Base = declarative_base()
-
-class ExampleModel(Base):
-    __tablename__ = 'example_table'
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-
-```
-
-## Working with Data
-
-You can place your raw datasets in the data/raw directory, intermediate datasets in data/interim, and the processed datasets ready for analysis in data/processed.
-
-To process data, you can modify the app.py script to include your data processing steps, utilizing pandas for data manipulation and analysis.
-
-## Contributors
-
-This template was built as part of the 4Geeks Academy [Data Science and Machine Learning Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about [4Geeks Academy's BootCamp programs](https://4geeksacademy.com/us/programs) here.
-
-Other templates and resources like this can be found on the school GitHub page.
+Paso 4: Optimiza el modelo anterior
+Después de entrenar el modelo, si los resultados no son satisfactorios, optimízalo empleando alguna de las técnicas vistas anteriormente.
