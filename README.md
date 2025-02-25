@@ -30,8 +30,9 @@ Navigate to the project directory and install the required Python packages:
 
 ```bash
 pip install -r requirements.txt
+```
 
-# Business Understanding
+Business Understanding
 
 ## Project Description
 
