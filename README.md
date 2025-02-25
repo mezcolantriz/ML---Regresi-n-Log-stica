@@ -1,47 +1,102 @@
-Comprensión empresarial
+# Data Science Project
 
-Los depósitos a largo plazo permiten a los bancos retener dinero durante un período de tiempo específico, lo que permite al banco utilizar ese dinero para mejorar sus inversiones. Las campañas de marketing de este producto se basan en llamadas telefónicas. Si un usuario no se encuentra disponible en un momento dado, entonces se le volverá a llamar de nuevo en otro momento.
+This template is designed to jumpstart data science projects by providing a basic setup for database connections, data processing, and the development of machine learning models. It includes a structured folder organization for your datasets and a predefined set of Python packages required for most data science tasks.
 
-Descripción del problema
+## Structure
 
-El banco portugués está teniendo una disminución en sus ingresos, por lo que quieren poder identificar a los clientes existentes que tienen una mayor probabilidad de contratar un depósito a largo plazo. Esto permitirá que el banco centre sus esfuerzos de marketing en esos clientes y evitará perder dinero y tiempo en clientes que probablemente no se suscribirán.
+The project is organized as follows:
 
-Para abordar este problema crearemos un algoritmo de clasificación que ayude a predecir si un cliente contratará o no un depósito a largo plazo.
+- `app.py` - The main Python script that you run for your project.
+- `explore.py` - A notebook for your exploratory analysis; ideally, the code from this notebook is migrated to app.py for production.
+- `utils.py` - This file contains utility code for operations such as database connections.
+- `requirements.txt` - This file contains the list of necessary Python packages.
+- `models/` - This directory should contain your SQLAlchemy model classes.
+- `data/` - This directory contains the following subdirectories:
+  - `interim/` - For intermediate data that has been transformed.
+  - `processed/` - For the final data to be used for modeling.
+  - `raw/` - For raw, unprocessed data.
 
-Paso 1: Carga del conjunto de datos
-El conjunto de datos se puede encontrar en esta carpeta de proyecto bajo el nombre bank-marketing-campaign-data.csv, y puedes cargarlo en el código directamente desde el siguiente enlace:
+## Setup
 
+**Prerequisites**
+
+Make sure you have Python 3.11+ installed on your machine. You will also need pip to install Python packages.
+
+**Installation**
+
+Clone the project repository to your local machine.
+
+Navigate to the project directory and install the required Python packages:
+
+```bash
+pip install -r requirements.txt
+
+# Business Understanding
+
+## Project Description
+
+This project aims to help the Portuguese bank identify existing customers with a higher probability of subscribing to a long-term deposit. Long-term deposits allow banks to hold funds for a specified period, enabling them to use these funds to improve their investments. Marketing campaigns for this product are based on telephone calls; if a user is unavailable at a given moment, they will be contacted again later.
+
+## Problem Description
+
+The Portuguese bank is experiencing a decline in its revenues, so they want to identify existing customers who have a higher probability of subscribing to a long-term deposit. This will allow them to focus their marketing efforts on those customers and avoid wasting time and resources on those who are unlikely to subscribe.
+
+To address this problem, a classification algorithm will be developed to predict whether a customer will subscribe to a long-term deposit or not.
+
+## Data
+
+The dataset is contained in the file `bank-marketing-campaign-data.csv` and can be loaded directly from the following link:  
 https://raw.githubusercontent.com/4GeeksAcademy/logistic-regression-project-tutorial/main/bank-marketing-campaign-data.csv
-O descargarlo y añadirlo a mano en tu repositorio. En este conjunto de datos encontrarás las siguientes variables:
 
-age. Edad del cliente (numérico)
-job. Tipo de trabajo (categórico)
-marital. Estado civil (categórico)
-education. Nivel de educación (categórico)
-default. ¿Tiene crédito actualmente? (categórico)
-housing. ¿Tiene un préstamo de vivienda? (categórico)
-loan. ¿Tiene un préstamo personal? (categórico)
-contact. Tipo de comunicación de contacto (categórico)
-month. Último mes en el que se le ha contactado (categórico)
-day_of_week. Último día en el que se le ha contactado (categórico)
-duration. Duración del contacto previo en segundos (numérico)
-campaign. Número de contactos realizados durante esta campaña al cliente (numérico)
-pdays. Número de días que transcurrieron desde la última campaña hasta que fue contactado (numérico)
-previous. Número de contactos realizados durante la campaña anterior al cliente (numérico)
-poutcome. Resultado de la campaña de marketing anterior (categórico)
-emp.var.rate. Tasa de variación del empleo. Indicador trimestral (numérico)
-cons.price.idx. Índice de precios al consumidor. Indicador mensual (numérico)
-cons.conf.idx. Índice de confianza del consumidor. Indicador mensual (numérico)
-euribor3m. Tasa EURIBOR 3 meses. Indicador diario (numérico)
-nr.employed. Número de empleados. Indicador trimestral (numérico)
-y. TARGET. El cliente contrata un depósito a largo plazo o no (categórico)
-Paso 2: Realiza un EDA completo
-Este segundo paso es vital para asegurar que nos quedamos con las variables estrictamente necesarias y eliminamos las que no son relevantes o no aportan información. Utiliza el Notebook de ejemplo que trabajamos y adáptalo a este caso de uso.
+The dataset contains the following variables:
 
-Asegúrate de dividir convenientemente el conjunto de datos en train y test como hemos visto en lecciones anteriores.
+- **age:** Customer's age (numeric)
+- **job:** Type of job (categorical)
+- **marital:** Marital status (categorical)
+- **education:** Level of education (categorical)
+- **default:** Has credit in default? (categorical)
+- **housing:** Has a housing loan? (categorical)
+- **loan:** Has a personal loan? (categorical)
+- **contact:** Contact communication type (categorical)
+- **month:** Last month contacted (categorical)
+- **day_of_week:** Last day contacted (categorical)
+- **duration:** Duration of the previous contact in seconds (numeric)
+- **campaign:** Number of contacts made during this campaign (numeric)
+- **pdays:** Number of days since the last campaign until contact (numeric)
+- **previous:** Number of contacts made during the previous campaign (numeric)
+- **poutcome:** Outcome of the previous marketing campaign (categorical)
+- **emp.var.rate:** Employment variation rate (numeric, quarterly indicator)
+- **cons.price.idx:** Consumer price index (numeric, monthly indicator)
+- **cons.conf.idx:** Consumer confidence index (numeric, monthly indicator)
+- **euribor3m:** 3-month EURIBOR rate (numeric, daily indicator)
+- **nr.employed:** Number of employees (numeric, quarterly indicator)
+- **y (TARGET):** Whether the customer subscribes to a long-term deposit (categorical)
 
-Paso 3: Construye un modelo de regresión logística
-No es necesario que optimices los hiperparámetros. Comienza utilizando una definición por defecto y mejórala en el paso siguiente.
+## Project Steps
 
-Paso 4: Optimiza el modelo anterior
-Después de entrenar el modelo, si los resultados no son satisfactorios, optimízalo empleando alguna de las técnicas vistas anteriormente.
+### Step 1: Data Loading
+
+Load the dataset from the provided link or download it manually and include it in your repository.
+
+### Step 2: Exploratory Data Analysis (EDA)
+
+Perform a comprehensive exploratory data analysis to:
+
+- Identify and select the relevant variables.
+- Remove variables that do not provide significant information.
+- Split the dataset into training and testing sets, following best practices.
+
+Use the provided example Notebook and adapt it to this use case.
+
+### Step 3: Build the Logistic Regression Model
+
+Create a logistic regression model to predict the probability that a customer will subscribe to a long-term deposit. Start with the default parameters and evaluate the model's performance.
+
+### Step 4: Model Optimization
+
+If the initial results are not satisfactory, apply optimization techniques (such as hyperparameter tuning or feature selection) to improve the model's performance.
+
+## Requirements
+
+- **Python 3.x**
+- **Libraries:** `pandas`, `numpy`, `scikit-learn`, `matplotlib`/`seaborn` (or other visualization libraries)
