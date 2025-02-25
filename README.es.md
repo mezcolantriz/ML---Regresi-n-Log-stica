@@ -1,4 +1,4 @@
-# Plantilla de Proyecto de Ciencia de Datos
+# Proyecto de Ciencia de Datos
 
 Esta plantilla está diseñada para impulsar proyectos de ciencia de datos proporcionando una configuración básica para conexiones de base de datos, procesamiento de datos, y desarrollo de modelos de aprendizaje automático. Incluye una organización estructurada de carpetas para tus conjuntos de datos y un conjunto de paquetes de Python predefinidos necesarios para la mayoría de las tareas de ciencia de datos.
 
@@ -32,57 +32,73 @@ Navega hasta el directorio del proyecto e instala los paquetes de Python requeri
 pip install -r requirements.txt
 ```
 
-**Crear una base de datos (si es necesario)**
+# Comprensión Empresarial
 
-Crea una nueva base de datos dentro del motor Postgres personalizando y ejecutando el siguiente comando: `$ createdb -h localhost -U <username> <db_name>`
-Conéctate al motor Postgres para usar tu base de datos, manipular tablas y datos: `$ psql -h localhost -U <username> <db_name>`
-NOTA: Recuerda revisar la información del archivo ./.env para obtener el nombre de usuario y db_name.
+## Descripción del Proyecto
 
-¡Una vez que estés dentro de PSQL podrás crear tablas, hacer consultas, insertar, actualizar o eliminar datos y mucho más!
+Este proyecto tiene como objetivo ayudar al banco portugués a identificar a los clientes con mayor probabilidad de contratar un depósito a largo plazo. Los depósitos a largo plazo permiten a los bancos retener dinero durante un período específico, lo que les permite utilizar esos fondos para mejorar sus inversiones. Las campañas de marketing para este producto se basan en llamadas telefónicas; si un usuario no está disponible en un momento dado, se le volverá a llamar en otro momento.
 
-**Variables de entorno**
+## Descripción del Problema
 
-Crea un archivo .env en el directorio raíz del proyecto para almacenar tus variables de entorno, como tu cadena de conexión a la base de datos:
+El banco portugués está experimentando una disminución en sus ingresos, por lo que desean identificar a los clientes existentes que tienen una mayor probabilidad de contratar un depósito a largo plazo. Esto permitirá enfocar los esfuerzos de marketing en esos clientes y evitará perder tiempo y recursos en aquellos que probablemente no se suscribirán.
 
-```makefile
-DATABASE_URL="your_database_connection_url_here"
-```
+Para abordar este problema, se desarrollará un algoritmo de clasificación que ayude a predecir si un cliente contratará o no un depósito a largo plazo.
 
-## Ejecutando la Aplicación
+## Datos
 
-Para ejecutar la aplicación, ejecuta el script app.py desde la raíz del directorio del proyecto:
+El conjunto de datos se encuentra en el archivo `bank-marketing-campaign-data.csv` y se puede cargar directamente desde el siguiente enlace: https://raw.githubusercontent.com/4GeeksAcademy/logistic-regression-project-tutorial/main/bank-marketing-campaign-data.csv
 
-```bash
-python app.py
-```
 
-## Añadiendo Modelos
+El conjunto de datos contiene las siguientes variables:
 
-Para añadir clases de modelos SQLAlchemy, crea nuevos archivos de script de Python dentro del directorio models/. Estas clases deben ser definidas de acuerdo a tu esquema de base de datos.
+- **age:** Edad del cliente (numérico)
+- **job:** Tipo de trabajo (categórico)
+- **marital:** Estado civil (categórico)
+- **education:** Nivel de educación (categórico)
+- **default:** ¿Tiene crédito actualmente? (categórico)
+- **housing:** ¿Tiene un préstamo de vivienda? (categórico)
+- **loan:** ¿Tiene un préstamo personal? (categórico)
+- **contact:** Tipo de comunicación de contacto (categórico)
+- **month:** Último mes en el que se le ha contactado (categórico)
+- **day_of_week:** Último día en el que se le ha contactado (categórico)
+- **duration:** Duración del contacto previo en segundos (numérico)
+- **campaign:** Número de contactos realizados durante esta campaña (numérico)
+- **pdays:** Número de días desde la última campaña hasta que fue contactado (numérico)
+- **previous:** Número de contactos realizados durante la campaña anterior (numérico)
+- **poutcome:** Resultado de la campaña de marketing anterior (categórico)
+- **emp.var.rate:** Tasa de variación del empleo (numérico, indicador trimestral)
+- **cons.price.idx:** Índice de precios al consumidor (numérico, indicador mensual)
+- **cons.conf.idx:** Índice de confianza del consumidor (numérico, indicador mensual)
+- **euribor3m:** Tasa EURIBOR a 3 meses (numérico, indicador diario)
+- **nr.employed:** Número de empleados (numérico, indicador trimestral)
+- **y (TARGET):** El cliente contrata un depósito a largo plazo o no (categórico)
 
-Definición del modelo de ejemplo (`models/example_model.py`):
+## Pasos del Proyecto
 
-```py
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String
+### Paso 1: Carga del Conjunto de Datos
 
-Base = declarative_base()
+Carga el conjunto de datos desde el enlace proporcionado o descárgalo manualmente e inclúyelo en el repositorio.
 
-class ExampleModel(Base):
-    __tablename__ = 'example_table'
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
+### Paso 2: Análisis Exploratorio de Datos (EDA)
 
-```
+Realiza un análisis exploratorio completo para:
+- Identificar y seleccionar las variables relevantes.
+- Eliminar aquellas variables que no aportan información significativa.
+- Dividir el conjunto de datos en conjuntos de entrenamiento y prueba, siguiendo las mejores prácticas.
 
-## Trabajando con Datos
+Utiliza el Notebook de ejemplo y adáptalo a este caso de uso.
 
-Puedes colocar tus conjuntos de datos brutos en el directorio data/raw, conjuntos de datos intermedios en data/interim, y los conjuntos de datos procesados listos para el análisis en data/processed.
+### Paso 3: Construcción del Modelo de Regresión Logística
 
-Para procesar datos, puedes modificar el script app.py para incluir tus pasos de procesamiento de datos, utilizando pandas para la manipulación y análisis de datos.
+Crea un modelo de regresión logística para predecir la probabilidad de que un cliente contrate un depósito a largo plazo. Comienza con los parámetros por defecto y evalúa el rendimiento del modelo.
 
-## Contribuyentes
+### Paso 4: Optimización del Modelo
 
-Esta plantilla fue construida como parte del [Data Science and Machine Learning Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning) de 4Geeks Academy por [Alejandro Sanchez](https://twitter.com/alesanchezr) y muchos otros contribuyentes. Descubre más sobre [los programas BootCamp de 4Geeks Academy](https://4geeksacademy.com/us/programs) aquí.
+Si los resultados iniciales no son satisfactorios, aplica técnicas de optimización (como ajuste de hiperparámetros o selección de variables) para mejorar el rendimiento del modelo.
 
-Otras plantillas y recursos como este se pueden encontrar en la página de GitHub de la escuela.
+## Requisitos
+
+- Python 3.x
+- Bibliotecas: `pandas`, `numpy`, `scikit-learn`, `matplotlib`/`seaborn` (u otras para visualización)
+
+
